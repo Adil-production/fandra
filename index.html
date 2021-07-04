@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+        *{
+            font-family: 'Open Sans', sans-serif , bold;
+        }
+        #myImg{
+            width: 350px;
+            height: auto;
+            display: none;
+        }
+#video{
+    display: none;
+}
+#groupImage,#groupVideo{
+    display: none;
+}
+#title{
+    color: black;
+    background-color: yellow;
+    padding: 10px;
+    position: relative;
+    top: -2px;
+    width: 98.5%;
+    margin: -7px;
+    font-size: 20px;
+}
+.btn{
+    color: black;
+    background-color: yellow;
+    padding: 10px;
+    border-radius: 50px;
+    font-family: 'Open Sans', sans-serif , bold;
+}
+.option{
+    padding: 15px;
+    border: 0px;
+    border-radius: 10px;
+    background-color: rgb(59, 59, 59);
+    color: white;
+    
+}
+#group-option{
+    position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50% , -50%);
+}
+    </style>
+</head>
+<body>
+    <div align="center">
+        
+        <h2 id="title">voire tes images et video sans probleme</h2>
+        <br>
+        <div align="left">
+            <h4 onclick="rojo()" style="display: none;" id="rojo">↩</h4>
+            
+            <script>
+                function rojo()
+                {
+                  document.getElementById("groupImage").style.display = "none";
+                  document.getElementById("groupVideo").style.display = "none";
+                  document.getElementById("rojo").style.display = "none";
+                  document.getElementById("group-option").style.display = "block";
+                }
+            </script>
+        </div>
+        <br>
+        <br>
+   <div id="group-option">
+        <button class="option" onclick="image()"><img src="so/11.png" width="50px" height="50px" style="filter: brightness(0) invert(1);"><br>Image</button>
+        <button class="option" onclick="vidio()"><img src="so/12.png" width="50px" height="50px" style="filter: brightness(0) invert(1);"><br>Video</button>
+        <script>
+                
+            function image(){
+                document.getElementById("group-option").style.display = "none";
+                document.getElementById("groupImage").style.display = "block";
+                document.getElementById("rojo").style.display = "block";
+               
+            }
+            function vidio(){
+                document.getElementById("group-option").style.display = "none";
+                document.getElementById("groupVideo").style.display = "block";
+                document.getElementById("rojo").style.display = "block";
+            }
+        </script>
+    </div>
+        <div id="groupImage">
+    <div id="load">
+        <input type='file' id="loader" class="btn" />
+        <br>
+        <br>
+        <br>
+    </div>
+        <img id="myImg" src="#" >
+        <script type="text/javascript">
+            window.addEventListener('load', function() {
+       document.querySelector('input[type="file"]').addEventListener('change', function() {
+           document.getElementById("myImg").style.display = "block";
+           if (this.files && this.files[0]) {
+               var img = document.getElementById('myImg');
+               img.onload = () => {
+                   URL.revokeObjectURL(img.src);  // no longer needed, free memory
+               }
+     
+               img.src = URL.createObjectURL(this.files[0]); // set src to blob url
+           }
+       });
+     });
+         
+         </script>
+
+</div>
+<br>
+<br>
+<br>
+
+<div id="groupVideo">
+<input id="file-input" type="file" accept="video/*" class="btn">
+<br>
+<br>
+<br>
+<video id="video" width="350" height="auto" controls></video>
+
+<script>
+    const input = document.getElementById('file-input');
+const video = document.getElementById('video');
+const videoSource = document.createElement('source');
+
+input.addEventListener('change', function() {
+    document.getElementById("video").style.display = "block";
+  const files = this.files || [];
+
+  if (!files.length) return;
+  
+  const reader = new FileReader();
+
+  reader.onload = function (e) {
+    videoSource.setAttribute('src', e.target.result);
+    video.appendChild(videoSource);
+    video.load();
+    video.play();
+  };
+  
+  reader.onprogress = function (e) {
+    console.log('progress: ', Math.round((e.loaded * 100) / e.total));
+  };
+  
+  reader.readAsDataURL(files[0]);
+});
+</script>
+
+</div>
+
+</div>     
+</body>
+</html>
